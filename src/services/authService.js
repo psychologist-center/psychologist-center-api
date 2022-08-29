@@ -19,6 +19,7 @@ exports.checkToken = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.SALT_KEY );
         await UserService.checkUserIsValid(decoded._id);
 
+        req.body.current_user = decoded._id;
         next();
     } catch (e) {
         res.status(401).json({ message: 'Token Inválido' });
@@ -36,6 +37,8 @@ exports.CheckOwn = async (req, res, next) => {
         const userExists = await UserService.checkUserIsValid(decoded._id);
 
         if (userExists.user_type === 'admin' || userExists.user_type === 'professional' || decoded._id == id) {
+            
+            req.body.current_user = decoded._id;
             next();
         } else {
             res.status(403).json({
@@ -57,6 +60,8 @@ exports.checkProfessional = async (req, res, next) => {
         const userExists = await UserService.checkUserIsValid(decoded._id);
 
         if (userExists.user_type === 'professional' || userExists.user_type === 'admin') {
+            
+            req.body.current_user = decoded._id;
             next();
         } else {
             res.status(403).json({

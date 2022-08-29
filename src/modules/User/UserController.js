@@ -211,7 +211,6 @@ exports.editUser = async (req, res) => {
     let { name, phone_number, birth_date, genre, address, city, state } = req.body;
 
     let contract = new ValidationContract();
-    contract.isRequired(name, 'O campo nome não pode ser vazio');
     contract.isGenreValid(genre, 'Gênero inválido');
     contract.isStateValid(state, 'Estado inválido');
 
@@ -249,6 +248,8 @@ exports.deletePatient = async (req, res) => {
 
     try {
         await UserRepository.delete(id);
+
+        res.status(200).json({ message: "Dados atualizados com sucesso" });
     } catch (e) {
         res.status(400).json({ message: e.message });
     }

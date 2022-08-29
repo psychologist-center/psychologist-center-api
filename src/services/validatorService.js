@@ -25,7 +25,7 @@ ValidationContract.prototype.isStateValid = (value, error) => {
 
 ValidationContract.prototype.isGenreValid = (value, error) => {
 
-    const listGenre = ['HM', 'M', 'NB', "NR"];
+    const listGenre = ['H', 'M', 'NB', "NI"];
 
     genreIsValid = listGenre.find((genre) => {
         return genre === value ? true : false;
@@ -40,6 +40,16 @@ ValidationContract.prototype.isCpfValid = (value, error) => {
     let cpfIsValid = validate(value);
 
     if (!cpfIsValid || value.length <= 0)
+        errors.push({ message: error });
+}
+
+ValidationContract.prototype.isSessionTypeValueValid = (value, error) => {
+    if (value < 0 || value > 3)
+        errors.push({ message: error });
+}
+
+ValidationContract.prototype.isStatusTypeValueValid = (value, error) => {
+    if (value < 0 || value > 3)
         errors.push({ message: error });
 }
 

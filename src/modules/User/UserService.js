@@ -10,3 +10,13 @@ exports.checkUserIsValid = async (userId, projection) => {
         return userExists
     }
 }
+
+exports.checkPatientIsValid = async (userInfo, projection) => {
+    let userExists = await User.find(userInfo, projection);
+
+    if (!userExists) {
+        throw new Error("Paciente não encontrado");
+    } else {
+        return userExists
+    }
+}

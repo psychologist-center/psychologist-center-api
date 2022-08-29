@@ -27,7 +27,7 @@ const schema = new Schema({
     },
     genre: {
         type: String,
-        enum: ['HM', 'M', 'NB', 'NR']
+        enum: ['H', 'M', 'NB', 'NI']
     },
     birth_date: {
         type: Date,
