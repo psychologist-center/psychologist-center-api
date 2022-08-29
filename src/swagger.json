@@ -1,0 +1,910 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Mente Sã - API",
+        "description": "API referente ao projeto Mente Sã",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/auth": {
+            "post": {
+                "summary": "Autenticar Usuário",
+                "description": "Essa rota é responsável por autenticar um usuário no sistema.",
+                "tags": [
+                    "Account"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Exemplo 1 - Patient": {
+                                    "value": {
+                                        "email": "paciente@gmail.com",
+                                        "password": "02903902"
+                                    }
+                                },
+                                "Exemplo 2 - Professional": {
+                                    "value": {
+                                        "email": "profissional@gmail.com",
+                                        "password": "293@das09"
+                                    }
+                                },
+                                "Exemplo 3 - Admin": {
+                                    "value": {
+                                        "email": "suporte@mentesa.com.br",
+                                        "password": "admin12345"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1 - Admin": {
+                                        "value": {
+                                            "token": "eyJhbGciOiJIUzI1NiI@Sdasd@kpXVCJ9.eyJpZCI6IjYyYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
+                                        }
+                                    },
+                                    "Exemplo 2 - Operator": {
+                                        "value": {
+                                            "token": "sdR5cCI6IkpXVCJ9.dsad2@jYyeyJhbGciOiJIUzI1NiIsYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
+                                        }
+                                    },
+                                    "Exemplo 3 - Cliente": {
+                                        "value": {
+                                            "token": "InR5cCI6IkpXVCJ9.eyJp@wsddsadwyJhbGciOiJIUzI1NiIsYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao autenticar usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "message": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Caso 1 - Campos não preenchidos": {
+                                        "value": [
+                                            {
+                                                "message": "O campo e-mail não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo senha não pode ser vazio"
+                                            }
+                                        ]
+                                    },
+                                    "Caso 2 - Usuário não encontrado": {
+                                        "value": {
+                                            "message": "Usuário não encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/patient/register": {
+            "post": {
+                "summary": "Cadastrar Usuário Paciente",
+                "description": "Essa rota é responsável por cadastrar um cliente na plataforma.",
+                "tags": [
+                    "Account"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Exemplo 1 - Paciente": {
+                                    "value": {
+                                        "name": "Lucas Amadeu Soares",
+                                        "cpf": "26791868007",
+                                        "email": "luqitas@gmail.com",
+                                        "genre": "HM",
+                                        "birth_date": "04/04/2003",
+                                        "address": "Av. Rodrigo Vieira, 1400",
+                                        "city": "São Paulo",
+                                        "state": "SP"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1 - Admin": {
+                                        "value": {
+                                            "token": "eyJhbGciOiJIUzI1NiI@Sdasd@kpXVCJ9.eyJpZCI6IjYyYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
+                                        }
+                                    },
+                                    "Exemplo 2 - Operator": {
+                                        "value": {
+                                            "token": "sdR5cCI6IkpXVCJ9.dsad2@jYyeyJhbGciOiJIUzI1NiIsYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
+                                        }
+                                    },
+                                    "Exemplo 3 - Cliente": {
+                                        "value": {
+                                            "token": "InR5cCI6IkpXVCJ9.eyJp@wsddsadwyJhbGciOiJIUzI1NiIsYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Usuário cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Cadastro com sucesso": {
+                                        "value": {
+                                            "message": "Usuário cadastrado com sucesso"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao autenticar usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "message": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Caso 1 - Campos não preenchidos": {
+                                        "value": [
+                                            {
+                                                "message": "O campo nome não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "Cpf Inválido"
+                                            },
+                                            {
+                                                "message": "E-mail Inválido"
+                                            },
+                                            {
+                                                "message": "Gênero Inválido"
+                                            },
+                                            {
+                                                "message": "O campo data de nascimento não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo endereço não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo cidade não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "Estado Inválido"
+                                            },
+                                            {
+                                                "message": "O campo senha não pode ser vazio"
+                                            }
+                                        ]
+                                    },
+                                    "Caso 2 - Usuário não encontrado": {
+                                        "value": {
+                                            "message": "Usuário não encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/professional/register": {
+            "post": {
+                "summary": "Cadastrar Usuário Profissional",
+                "description": "Essa rota é responsável por cadastrar um profissional na plataforma.",
+                "tags": [
+                    "Account"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Exemplo 1 - Profissional": {
+                                    "value": {
+                                        "name": "David Augusto",
+                                        "cpf": "35794863002",
+                                        "crp": "23232323",
+                                        "email": "david@gmail.com",
+                                        "genre": "HM",
+                                        "birth_date": "04/04/2003",
+                                        "address": "Av. Lins de Vasconcelos, 1320",
+                                        "city": "São Paulo",
+                                        "state": "SP"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Cadastro com sucesso": {
+                                        "value": {
+                                            "message": "Usuário cadastrado com sucesso"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao autenticar usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "message": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Caso 1 - Campos não preenchidos": {
+                                        "value": [
+                                            {
+                                                "message": "O campo nome não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "Cpf Inválido"
+                                            },
+                                            {
+                                                "message": "O campo crp não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "E-mail Inválido"
+                                            },
+                                            {
+                                                "message": "Gênero Inválido"
+                                            },
+                                            {
+                                                "message": "O campo data de nascimento não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo endereço não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo cidade não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "Estado Inválido"
+                                            },
+                                            {
+                                                "message": "O campo senha não pode ser vazio"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/patient/list": {
+            "get": {
+                "summary": "Listar Usuários Pacientes",
+                "description": "Essa rota é responsável por listar os pacientes",
+                "tags": [
+                    "Account"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "inputFilter",
+                        "in": "query",
+                        "description": "Filtrar usuários por texto."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Limitar a quantidade de exibições por página"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de pacientes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                },
+                                "examples": {
+                                    "Lista de usuários": {
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "_id": "630c0cc07cf26e9b918eddcb",
+                                                    "name": "David Augusto de Andrade Ribeiro",
+                                                    "cpf": 27561887000,
+                                                    "phone_number": null,
+                                                    "email": "davidribeiro@gmail.com",
+                                                    "genre": "NR",
+                                                    "birth_date": "2003-07-11T03:00:00.000Z",
+                                                    "address": "Av. Paulista, 1400",
+                                                    "city": "São Paulo",
+                                                    "state": "RJ",
+                                                    "user_type": "professional"
+                                                },
+                                                {
+                                                    "_id": "630c0cc07cf26e9b918eddcb",
+                                                    "name": "Vitor Mantovani",
+                                                    "cpf": 27561887000,
+                                                    "phone_number": null,
+                                                    "email": "vitor@gmail.com",
+                                                    "genre": "NR",
+                                                    "birth_date": "2003-07-11T03:00:00.000Z",
+                                                    "address": "Av. Imigrantes, 1400",
+                                                    "city": "São Paulo",
+                                                    "state": "RJ",
+                                                    "user_type": "professional"
+                                                }
+                                            ],
+                                            "total": "2"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/professional/list": {
+            "get": {
+                "summary": "Listar Usuários Profissionais",
+                "description": "Essa rota é responsável por listar os profissionais",
+                "tags": [
+                    "Account"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "inputFilter",
+                        "in": "query",
+                        "description": "Filtrar usuários por texto."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Limitar a quantidade de exibições por página"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                },
+                                "examples": {
+                                    "Lista de usuários": {
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "_id": "630c0cc07cf26e9b918eddcb",
+                                                    "name": "David Augusto de Andrade Ribeiro",
+                                                    "crp": 232323,
+                                                    "cpf": 27561887000,
+                                                    "phone_number": null,
+                                                    "email": "davidribeiro@gmail.com",
+                                                    "genre": "NR",
+                                                    "birth_date": "2003-07-11T03:00:00.000Z",
+                                                    "address": "Av. Paulista, 1400",
+                                                    "city": "São Paulo",
+                                                    "state": "RJ",
+                                                    "user_type": "professional"
+                                                },
+                                                {
+                                                    "_id": "630c0cc07cf26e9b918eddcb",
+                                                    "name": "Vitor Mantovani",
+                                                    "crp": 232323,
+                                                    "cpf": 27561887000,
+                                                    "phone_number": null,
+                                                    "email": "vitor@gmail.com",
+                                                    "genre": "NR",
+                                                    "birth_date": "2003-07-11T03:00:00.000Z",
+                                                    "address": "Av. Imigrantes, 1400",
+                                                    "city": "São Paulo",
+                                                    "state": "RJ",
+                                                    "user_type": "professional"
+                                                }
+                                            ],
+                                            "total": "2"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "user/{id}": {
+            "put": {
+                "summary": "Editar dados",
+                "description": "Essa rota é responsável por editar informações de uma conta",
+                "tags": [
+                    "Account"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Exemplo 1 - Campos permitidos para alteração": {
+                                    "value": {
+                                        "name": "David Augusto de Andrade Ribeiro",
+                                        "genre": "NR",
+                                        "phone_number": "221232323",
+                                        "birth_date": "07/11/2003",
+                                        "address": "Av. Paulista, 1400",
+                                        "city": "São Paulo",
+                                        "state": "RJ"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dados alterados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Dados alterados com sucesso"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao tentar editar informações.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Caso 1 - Usuário não encontrado": {
+                                        "value": {
+                                            "message": "Usuário não encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "String",
+                        "required": true
+                    },
+                    "password": {
+                        "type": "String",
+                        "required": true
+                    },
+                    "crp": {
+                        "type": "Number"
+                    },
+                    "cpf": {
+                        "type": "Number",
+                        "required": true,
+                        "unique": true
+                    },
+                    "phone_number": {
+                        "type": "Number"
+                    },
+                    "email": {
+                        "type": "String",
+                        "required": true,
+                        "unique": true
+                    },
+                    "genre": {
+                        "type": "String",
+                        "enum": [
+                            "HM",
+                            "M",
+                            "NB",
+                            "NR"
+                        ]
+                    },
+                    "birth_date": {
+                        "type": "Date",
+                        "required": true
+                    },
+                    "address": {
+                        "type": "String",
+                        "required": true
+                    },
+                    "city": {
+                        "type": "String",
+                        "required": true
+                    },
+                    "state": {
+                        "type": "String",
+                        "required": true,
+                        "enum": [
+                            "AC",
+                            "AL",
+                            "AP",
+                            "AM",
+                            "BA",
+                            "CE",
+                            "DF",
+                            "ES",
+                            "GO",
+                            "MA",
+                            "MT",
+                            "MS",
+                            "MG",
+                            "PA",
+                            "PB",
+                            "PR",
+                            "PE",
+                            "PI",
+                            "RJ",
+                            "RN",
+                            "RS",
+                            "RO",
+                            "RR",
+                            "SC",
+                            "SP",
+                            "SE",
+                            "TO"
+                        ]
+                    },
+                    "user_typ": {
+                        "type": "String",
+                        "require": true,
+                        "enum": [
+                            "patient",
+                            "professional",
+                            "admin"
+                        ]
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
