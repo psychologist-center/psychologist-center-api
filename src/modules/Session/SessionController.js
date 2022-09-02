@@ -21,7 +21,6 @@ exports.registerSession = async (req, res) => {
     }
 
     try {
-
         for(let i in patient_id) {
             let patientInfo = await UserRepository.findOne({
                 "$and": [
@@ -60,12 +59,13 @@ exports.registerSession = async (req, res) => {
 
 exports.ListSession = async (req, res) => {
     let { inputFilter = '', pageSize, page = 1 } = req.query;
+    let { current_user } = req.body;
 
-    filter = {};
-
+    filter = {
+        "professional._id": current_user
+    };
 
     try {
-
         let sessionList = await SessionRepository.find(filter, pageSize, page);
 
         res.status(200).json({ data: sessionList, total: sessionList.length });

@@ -9,6 +9,9 @@ const schema = new Schema({
         type: String,
         required: true
     },
+    register_by: {
+        type: String
+    },
     crp: {
         type: Number
     },
@@ -27,7 +30,7 @@ const schema = new Schema({
     },
     genre: {
         type: String,
-        enum: ['H', 'M', 'NB', 'NI']
+        enum: ['M', 'F', 'NB', 'NI']
     },
     birth_date: {
         type: Date,

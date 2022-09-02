@@ -155,38 +155,6 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Usuário autenticado",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "token": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "Exemplo 1 - Admin": {
-                                        "value": {
-                                            "token": "eyJhbGciOiJIUzI1NiI@Sdasd@kpXVCJ9.eyJpZCI6IjYyYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
-                                        }
-                                    },
-                                    "Exemplo 2 - Operator": {
-                                        "value": {
-                                            "token": "sdR5cCI6IkpXVCJ9.dsad2@jYyeyJhbGciOiJIUzI1NiIsYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
-                                        }
-                                    },
-                                    "Exemplo 3 - Cliente": {
-                                        "value": {
-                                            "token": "InR5cCI6IkpXVCJ9.eyJp@wsddsadwyJhbGciOiJIUzI1NiIsYmU2YmEwNjFlZjcwZjhiY2JkYzJkYyIsImVtYWlsIjoiZGF2aWRhdWd1c3RvQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCBBdWd1c3RvIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjU2NjQ4OTY4LCJleHAiOjE2NTY3MzUzNjh9.klYfOO690cgu6w1GNheAaC8b4HHjXmKMqsJYQx7mAJU"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
                     "201": {
                         "description": "Usuário cadastrado com sucesso",
                         "content": {
@@ -802,6 +770,406 @@
                     }
                 }
             }
+        },
+        "/session/register": {
+            "post": {
+                "summary": "Cadastrar Sessão",
+                "description": "Essa rota é responsável por registrar uma sessão.",
+                "tags": [
+                    "Session"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Session"
+                            },
+                            "examples": {
+                                "Exemplo 1": {
+                                    "value": {
+                                        "patient_id": [
+                                            "630c0dbab8aa97843febb9d9",
+                                            "630c9aaf3c5c46e0547f6d4f"
+                                        ],
+                                        "appointment_date": "10/10/2022",
+                                        "topic": "Ansiedade",
+                                        "duration": "60",
+                                        "session_type": 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sessão cadastrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Cadastro com sucesso": {
+                                        "value": {
+                                            "message": "Sessão cadastrado com sucesso"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao autenticar usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "message": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Caso 1 - Campos não preenchidos": {
+                                        "value": [
+                                            {
+                                                "message": "O campo paciente não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "Cpf Inválido"
+                                            },
+                                            {
+                                                "message": "O campo data de agendamento não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo tópico não pode ser vazio"
+                                            },
+                                            {
+                                                "message": "O campo duração não pode ser vazio"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/session/list": {
+            "get": {
+                "summary": "Listar Sessões",
+                "description": "Essa rota é responsável por listar as sessões do profissional",
+                "tags": [
+                    "Session"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "inputFilter",
+                        "in": "query",
+                        "description": "Filtrar sessões por texto."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Limitar a quantidade de exibições por página"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Sessões",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Session"
+                                },
+                                "examples": {
+                                    "Lista de usuários": {
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "professional": {
+                                                        "_id": "630c0cc07cf26e9b918eddcb",
+                                                        "name": "David Augusto de Andrade Ribeiro",
+                                                        "email": "davidribeiro@gmail.com"
+                                                    },
+                                                    "_id": "630d31cbe715d1c80030adfd",
+                                                    "patient": [
+                                                        {
+                                                            "_id": "630c0dbab8aa97843febb9d9",
+                                                            "name": "Alexandre Jorge Ribeiro",
+                                                            "email": "lucasamadeu1234@gmail.com"
+                                                        },
+                                                        {
+                                                            "_id": "630c9aaf3c5c46e0547f6d4f",
+                                                            "name": "Lucas Amadeu Soares",
+                                                            "email": "luqitas@gmail.com"
+                                                        }
+                                                    ],
+                                                    "appointment_date": "2022-10-02T03:00:00.000Z",
+                                                    "status": 3,
+                                                    "topic": "Depressão",
+                                                    "duration": 60,
+                                                    "session_type": 0,
+                                                    "__v": 0,
+                                                    "observation": "Paciente não compareceu"
+                                                }
+                                            ],
+                                            "total": "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "session/{id}": {
+            "put": {
+                "summary": "Editar dados",
+                "description": "Essa rota é responsável por editar informações de uma sessão",
+                "tags": [
+                    "Session"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da sessão",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Session"
+                            },
+                            "examples": {
+                                "Exemplo 1 - Campos permitidos para alteração": {
+                                    "value": {
+                                        "patient_id": ["3243943434"],
+                                        "topic": "Ansiedade",
+                                        "duration": 40,
+                                        "status": 3,
+                                        "session_type": 0,
+                                        "observation": "Paciente não compareceu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dados alterados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Dados alterados com sucesso"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao tentar editar informações.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Caso 1 - Usuário não encontrado": {
+                                        "value": {
+                                            "message": "Usuário não encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -895,6 +1263,76 @@
                             "professional",
                             "admin"
                         ]
+                    }
+                }
+            },
+            "Session": {
+                "type": "object",
+                "properties": {
+                    "patient": [
+                        {
+                            "_id": false,
+                            "_id": {
+                                "type": "String",
+                                "required": true
+                            },
+                            "name": {
+                                "type": "String",
+                                "required": true
+                            },
+                            "email": {
+                                "type": "String",
+                                "required": true
+                            }
+                        }
+                    ],
+                    "professional": {
+                        "_id": false,
+                        "_id": {
+                            "type": "String",
+                            "required": true
+                        },
+                        "name": {
+                            "type": "String",
+                            "required": true
+                        },
+                        "email": {
+                            "type": "String",
+                            "required": true
+                        }
+                    },
+                    "appointment_date": {
+                        "type": "Date",
+                        "required": true
+                    },
+                    "status": {
+                        "type": "Number",
+                        "enum": [
+                            0,
+                            1,
+                            2
+                        ],
+                        "default": 0
+                    },
+                    "topic": {
+                        "type": "String",
+                        "required": true
+                    },
+                    "duration": {
+                        "type": "Number",
+                        "required": true
+                    },
+                    "session_type": {
+                        "type": "Number",
+                        "enum": [
+                            0,
+                            1,
+                            2
+                        ],
+                        "required": true
+                    },
+                    "observation": {
+                        "type": "String"
                     }
                 }
             }

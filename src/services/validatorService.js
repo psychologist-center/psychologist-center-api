@@ -25,7 +25,7 @@ ValidationContract.prototype.isStateValid = (value, error) => {
 
 ValidationContract.prototype.isGenreValid = (value, error) => {
 
-    const listGenre = ['H', 'M', 'NB', "NI"];
+    const listGenre = ['M', 'F', 'NB', "NI"];
 
     genreIsValid = listGenre.find((genre) => {
         return genre === value ? true : false;

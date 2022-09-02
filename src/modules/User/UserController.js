@@ -28,14 +28,31 @@ exports.authenticateUser = async (req, res) => {
 
         res.status(200).send({
             token: token,
+            data: userInfo
         });
     } catch (e) {
         res.status(400).json({ message: e.message });
     }
 };
 
+exports.checkToken = async (req, res) => {
+    let { current_user } = req.body;
+
+    try {
+
+        const userInfo = await UserService.checkUserIsValid(current_user, 
+            { name: 1, email: 1, user_type: 1 })
+
+        res.status(200).send(userInfo);
+
+    } catch(e) {
+        res.status(400).json({ message: e.message });
+    }   
+};
+
 exports.registerPatient = async (req, res) => {
     let { name, cpf, email, phone_number, genre, birth_date, address, city, state } = req.body;
+    let { current_user } = req.body;
 
     let password = crypto.randomBytes(6).toString("HEX");
 
@@ -56,17 +73,6 @@ exports.registerPatient = async (req, res) => {
     }
 
     try {
-        await mailService.sendEmail({
-            email,
-            subject: "Credenciais Mente Sã",
-            payload: {
-                name,
-                email,
-                password: password
-            },
-            template: "../template/newUser.handlebars"
-        });
-
         await UserRepository.create({
             name,
             cpf,
@@ -77,6 +83,7 @@ exports.registerPatient = async (req, res) => {
             address,
             city,
             state,
+            register_by: current_user,
             user_type: 'patient',
             password: md5(password + process.env.SALT_KEY ),
         });
@@ -127,8 +134,17 @@ exports.registerProfessional = async (req, res) => {
             password: md5(password + process.env.SALT_KEY ),
         });
 
+        const userInfo = await UserRepository.findOne({
+            email,
+            password: md5(password + process.env.SALT_KEY )
+        }, { name: 1, email: 1, user_type: 1 });
+
+        const token = await AuthService.generateToken(userInfo);
+
         res.status(201).json({
-            message: 'Profissional cadastrado com sucesso'
+            message: 'Profissional cadastrado com sucesso',
+            token: token,
+            data: userInfo
         });
     } catch (e) {
         res.status(400).json({
@@ -139,9 +155,11 @@ exports.registerProfessional = async (req, res) => {
 
 exports.ListPatient = async (req, res) => {
     let { inputFilter = '', pageSize, page = 1 } = req.query;
+    let { current_user } = req.body;
 
     let filter = {
         user_type: "patient",
+        register_by: current_user,
         "$or": [
             { email: { '$regex': inputFilter, '$options': 'i' } },
             { name: { '$regex': inputFilter, '$options': 'i' } },
@@ -159,6 +177,7 @@ exports.ListPatient = async (req, res) => {
         city: 1,
         state: 1,
         user_type: 1,
+        register_by: 1,
     }
 
     try {

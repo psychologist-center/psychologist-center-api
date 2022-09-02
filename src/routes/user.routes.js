@@ -7,6 +7,7 @@ router.post('/auth', UserController.authenticateUser);
 router.post('/user/professional/register', UserController.registerProfessional);
 router.post('/user/patient/register', AuthService.checkProfessional, UserController.registerPatient);
 
+router.get('/checktoken', AuthService.checkToken, UserController.checkToken);
 router.get('/user/list/patient', AuthService.checkProfessional, UserController.ListPatient);
 router.get('/user/list/professional', AuthService.checkProfessional, UserController.ListProfessional);
 
