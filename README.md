@@ -5,6 +5,14 @@
   <p align="center">MenteSã ajuda você a acompanhar todas as consultas que você tem com seus pacientes registrados.</p>
     <p align="center">
 
+<p align="center">
+  <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#funcionalidades">Funcionalidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#descrição">Descrição</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#executando-a-aplicação">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#suporte">Suporte</a>
+</p>
+
 ## Tecnologias
 
 - [NodeJs](https://nodejs.org/en/)
@@ -46,7 +54,7 @@ $ git clone https://github.com/DavidAugustoo/MenteSa-backend.git
 
 ##### Instale as dependências
 ```bash
-$ npm run start-dev
+$ npm install
 ```
 
 ##### Configure as variáveis de ambiente
