@@ -14,11 +14,12 @@
 - [Swagger](https://swagger.io/)
 
 ## Funcionalidades
+Obs: Funcionalidades desmarcadas estão em andamento
 
  - [x] - Cadastro de profissionais
  - [x] - Cadastro de pacientes
  - [x] - Autenticação de usuário na plataforma
- - [x] - Exclusão de pacientes e profissionais
+ - [x] - Exclusão de pacientes
  - [ ] - Visualizar detalhes de pacientes
  - [x] - Listagem de pacientes com paginação
  - [x] - Listagem de profissionais com paginação

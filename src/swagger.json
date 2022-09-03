@@ -399,7 +399,7 @@
                 }
             }
         },
-        "/user/patient/list": {
+        "/user/list/patient": {
             "get": {
                 "summary": "Listar Usuários Pacientes",
                 "description": "Essa rota é responsável por listar os pacientes",
@@ -521,7 +521,7 @@
                 }
             }
         },
-        "/user/professional/list": {
+        "/user/list/professional": {
             "get": {
                 "summary": "Listar Usuários Profissionais",
                 "description": "Essa rota é responsável por listar os profissionais",
@@ -726,6 +726,94 @@
                                     "Caso 1 - Usuário não encontrado": {
                                         "value": {
                                             "message": "Usuário não encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Token inválido"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso restrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Acesso restrito"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar Paciente",
+                "description": "Essa rota é responsável por deletar pacientes",
+                "tags": [
+                    "Account"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário deletado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Exemplo 1": {
+                                        "value": {
+                                            "message": "Usuário deletado com sucesso"
                                         }
                                     }
                                 }

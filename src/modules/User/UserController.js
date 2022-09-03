@@ -268,7 +268,7 @@ exports.deletePatient = async (req, res) => {
     try {
         await UserRepository.delete(id);
 
-        res.status(200).json({ message: "Dados atualizados com sucesso" });
+        res.status(200).json({ message: "Usuário deletado com sucesso" });
     } catch (e) {
         res.status(400).json({ message: e.message });
     }
