@@ -1,14 +1,11 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://mentesa.davidaugusto.tech/assets/mentesa.26372786.svg" width="320" alt="Nest Logo" /></a>
+  <a target="blank"><img width="100%"src="https://i.imgur.com/sx7tcmu.png" width="320" alt="Nest Logo" /></a>
 </p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">MenteSã ajuda você a acompanhar todas as consultas que você tem com seus pacientes registrados.</p>
     <p align="center">
 
-## Tecnolgoias
+## Tecnologias
 
 - [NodeJs](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
