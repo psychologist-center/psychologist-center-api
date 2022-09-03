@@ -52,9 +52,11 @@ $ npm run start-dev
 http://localhost:8080/api-docs/
 ```
 
-## Support
+## Suporte
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Documentação da API - [Acessar Swagger](https://mentesa.azurewebsites.net/api-docs/)
+
+- Documentação do Projeto - [Acessar PDF](https://drive.google.com/file/d/1U6BPduRu61tPzoFHiDDpq7ZMQ5s76X7J/view?usp=sharing)
 
 ## Contato
 

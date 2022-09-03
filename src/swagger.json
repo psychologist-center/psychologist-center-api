@@ -3,12 +3,20 @@
     "info": {
         "title": "Mente Sã - API",
         "description": "API referente ao projeto Mente Sã",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "contact": {
+            "email": "contato@davidaugusto.tech",
+            "name": "David Augusto"
+        }
     },
     "servers": [
         {
             "url": "http://localhost:3000/api",
             "description": "Servidor Local"
+        },
+        {
+            "url": "https://mentesa.azurewebsites.net/api",
+            "description": "Servidor Hospedado"
         }
     ],
     "paths": {
