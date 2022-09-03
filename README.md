@@ -8,6 +8,14 @@
   <p align="center">MenteSã ajuda você a acompanhar todas as consultas que você tem com seus pacientes registrados.</p>
     <p align="center">
 
+## Tecnolgoias
+
+- [NodeJs](https://nodejs.org/en/)
+- [Express](https://expressjs.com/pt-br/)
+- [Mongoose](https://mongoosejs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Swagger](https://swagger.io/)
+
 
 ## Descrição
 
