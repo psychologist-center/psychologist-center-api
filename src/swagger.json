@@ -659,9 +659,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "email",
                         "in": "path",
-                        "description": "ID do usuário",
+                        "description": "Email do usuário",
                         "required": true
                     }
                 ],
@@ -675,9 +675,7 @@
                                 "Exemplo 1 - Campos permitidos para alteração": {
                                     "value": {
                                         "name": "David Augusto de Andrade Ribeiro",
-                                        "genre": "NR",
-                                        "phone_number": "221232323",
-                                        "birth_date": "07/11/2003",
+                                        "email": "david@gmail.com",
                                         "address": "Av. Paulista, 1400",
                                         "city": "São Paulo",
                                         "state": "RJ"
@@ -791,9 +789,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "email",
                         "in": "path",
-                        "description": "ID do usuário",
+                        "description": "Email do usuário",
                         "required": true
                     }
                 ],
