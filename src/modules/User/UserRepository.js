@@ -28,10 +28,10 @@ exports.find = async (filter, pageSize, page, projection) => {
         .limit(pageSize)
 }
 
-exports.update = async (userId, userInfo) => {
-    return await User.findByIdAndUpdate({ _id: ObjectId(userId) }, userInfo);
+exports.update = async (email, userInfo) => {
+    return await User.findOneAndUpdate({ email }, userInfo);
 }
 
-exports.delete = async (userId) => {
-    return await User.findOneAndDelete({ _id: ObjectId(userId) });
+exports.delete = async (email) => {
+    return await User.findOneAndDelete({ email });
 }

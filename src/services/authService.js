@@ -51,11 +51,11 @@ exports.CheckOwn = async (req, res, next) => {
 };
 
 exports.checkProfessional = async (req, res, next) => {
-    var [authType, token] = req.headers.authorization.split(' ');
-
-    if (!token) return res.status(401).json({ message: 'Token Inválido' });
-
     try {
+        var [authType, token] = req.headers.authorization.split(' ');
+        if (!token) return res.status(401).json({ message: 'Token Inválido' });
+        
+        
         const decoded = jwt.verify(token, process.env.SALT_KEY );
         const userExists = await UserService.checkUserIsValid(decoded._id);
 

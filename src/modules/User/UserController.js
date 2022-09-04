@@ -167,6 +167,7 @@ exports.ListPatient = async (req, res) => {
     }
 
     let projection = {
+        _id: 1,
         name: 1,
         cpf: 1,
         email: 1,
@@ -226,11 +227,10 @@ exports.ListProfessional = async (req, res) => {
 }
 
 exports.editUser = async (req, res) => {
-    let { id } = req.params;
-    let { name, phone_number, birth_date, genre, address, city, state } = req.body;
+    let { email: emailUser } = req.params;
+    let { name, email, address, city, state } = req.body;
 
     let contract = new ValidationContract();
-    contract.isGenreValid(genre, 'Gênero inválido');
     contract.isStateValid(state, 'Estado inválido');
 
     if (!contract.isValid()) {
@@ -240,17 +240,9 @@ exports.editUser = async (req, res) => {
 
     try {
 
-        let checkUserExists = await UserService.checkUserIsValid(id);
-
-        if (checkUserExists.user_type != "patient") {
-            throw new Error("Rota para alterar dados de pacientes");
-        }
-
-        await UserRepository.update(id, {
+        await UserRepository.update(emailUser, {
             name,
-            phone_number,
-            birth_date,
-            genre,
+            email,
             address,
             city,
             state
@@ -263,10 +255,10 @@ exports.editUser = async (req, res) => {
 };
 
 exports.deletePatient = async (req, res) => {
-    let { id } = req.params;
+    let { email } = req.params;
 
     try {
-        await UserRepository.delete(id);
+        await UserRepository.delete(email);
 
         res.status(200).json({ message: "Usuário deletado com sucesso" });
     } catch (e) {
