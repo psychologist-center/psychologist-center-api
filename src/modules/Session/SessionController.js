@@ -1,5 +1,6 @@
 const ValidationContract = require('../../services/validatorService');
 const SessionRepository = require('./SessionRepository');
+const SessionService = require('../Session/SessionService');
 const UserService = require('../User/UserService');
 const UserRepository = require('../User/UserRepository');
 
@@ -69,6 +70,24 @@ exports.ListSession = async (req, res) => {
         let sessionList = await SessionRepository.find(filter, pageSize, page);
 
         res.status(200).json({ data: sessionList, total: sessionList.length });
+    } catch (e) {
+        res.status(400).json({ message: e.message });
+    }
+}
+
+exports.dashboard = async (req, res) => {
+    let { current_user } = req.body;
+
+    try {
+        let scheduledSessionsDay = await SessionService.ScheduledSessionsDay(current_user);
+        let scheduledSessionsMonth = await SessionService.ScheduledSessionsMonth(current_user);
+        let canceledSessionsMonth = await SessionService.CanceledSessionsMonth(current_user);
+
+        res.status(200).json({ 
+            scheduledSessionsDay,
+            scheduledSessionsMonth,
+            canceledSessionsMonth
+        });
     } catch (e) {
         res.status(400).json({ message: e.message });
     }

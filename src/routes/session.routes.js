@@ -7,6 +7,8 @@ router.post('/session/register', AuthService.checkProfessional, SessionControlle
 
 router.get('/session/list', AuthService.checkProfessional, SessionController.ListSession);
 
+router.get('/dashboard', AuthService.checkProfessional, SessionController.dashboard);
+
 router.put('/session/:id', AuthService.checkProfessional, SessionController.editSession);
 
 module.exports = router;
