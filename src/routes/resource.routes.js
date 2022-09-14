@@ -7,4 +7,6 @@ router.post('/resource/register', AuthService.checkProfessional, ResourceControl
 
 router.get('/resource/list', AuthService.checkProfessional, ResourceController.listResources);
 
+router.put('/resource/:id', AuthService.checkProfessional, ResourceController.editResource);
+
 module.exports = router;
