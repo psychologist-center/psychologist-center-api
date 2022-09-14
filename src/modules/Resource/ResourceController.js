@@ -36,3 +36,24 @@ exports.registerResource = async (req, res) => {
         });
     }
 };
+
+exports.listResources = async (req, res) => {
+    let { inputFilter = "", pageSize = 10, page = 1 } = req.query;
+    let { current_user } = req.body;
+
+    filter = {
+        user_id: current_user,
+    };
+
+    if (inputFilter.length) {
+        filter["title"] = { $regex: inputFilter, $options: "i" };
+    }
+
+    try {
+        let sessionList = await ResourceRepository.find(filter, pageSize, page);
+
+        res.status(200).json({ data: sessionList, total: sessionList.length });
+    } catch (e) {
+        res.status(400).json({ message: e.message });
+    }
+};
