@@ -18,3 +18,10 @@ exports.update = async (where, resourceInfo) => {
         resourceInfo
     );
 };
+
+exports.delete = async (where) => {
+    return await Resource.findOneAndDelete({
+        ...where,
+        _id: ObjectId(where._id),
+    });
+};
