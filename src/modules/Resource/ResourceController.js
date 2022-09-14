@@ -94,3 +94,21 @@ exports.editResource = async (req, res) => {
         res.status(400).json({ message: e.message });
     }
 };
+
+exports.deleteResource = async (req, res) => {
+    let { id } = req.params;
+    let { current_user } = req.body;
+
+    const where = {
+        _id: id,
+        user_id: current_user,
+    };
+
+    try {
+        await ResourceRepository.delete(where);
+
+        res.status(200).json({ message: "Recurso deletado com sucesso" });
+    } catch (e) {
+        res.status(400).json({ message: e.message });
+    }
+};
