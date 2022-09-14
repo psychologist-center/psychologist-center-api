@@ -95,4 +95,9 @@ ValidationContract.prototype.isValid = () => {
     return errors.length == 0;
 }
 
+ValidationContract.prototype.isValidCategory = (value, error) => {
+    if (["metáfora", "transe", "ferramenta"].indexOf(value) === -1)
+        errors.push({ message: error });
+}
+
 module.exports = ValidationContract;
