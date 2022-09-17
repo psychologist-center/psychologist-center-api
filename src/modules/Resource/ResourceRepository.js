@@ -6,10 +6,12 @@ exports.create = async (resourceInfo) => {
 };
 
 exports.find = async (filter, pageSize, page, projection) => {
+    const skip = !page || page <= 1 ? 0 : !pageSize ? page : page * pageSize;
+    const limit = pageSize ? pageSize : 0;
     return await Resource.find(filter, projection)
-        .sort({ active: -1 })
-        .skip(page > 0 ? (page - 1) * pageSize : 0)
-        .limit(pageSize);
+        .sort({ create_date: "asc" })
+        .skip(skip)
+        .limit(limit);
 };
 
 exports.update = async (where, resourceInfo) => {

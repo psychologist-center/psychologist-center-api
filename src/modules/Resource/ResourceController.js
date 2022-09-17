@@ -38,7 +38,7 @@ exports.registerResource = async (req, res) => {
 };
 
 exports.listResources = async (req, res) => {
-    let { inputFilter = "", pageSize = 10, page = 1 } = req.query;
+    let { inputFilter = "", pageSize, page } = req.query;
     let { current_user } = req.body;
 
     filter = {
@@ -50,9 +50,9 @@ exports.listResources = async (req, res) => {
     }
 
     try {
-        let sessionList = await ResourceRepository.find(filter, pageSize, page);
+        let resourceList = await ResourceRepository.find(filter, pageSize, page);
 
-        res.status(200).json({ data: sessionList, total: sessionList.length });
+        res.status(200).json({ data: resourceList, total: resourceList.length });
     } catch (e) {
         res.status(400).json({ message: e.message });
     }
