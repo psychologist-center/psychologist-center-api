@@ -3,9 +3,10 @@ const SessionRepository = require('./SessionRepository');
 const SessionService = require('../Session/SessionService');
 const UserService = require('../User/UserService');
 const UserRepository = require('../User/UserRepository');
+const { isResourceExists } = require('../Resource/ResourceService');
 
 exports.registerSession = async (req, res) => {
-    let { current_user, patient_id, appointment_date, topic, duration, session_type } = req.body;
+    let { current_user, patient_id, appointment_date, topic, duration, session_type, resource_ids } = req.body;
 
     let patient = [];
 
@@ -22,6 +23,10 @@ exports.registerSession = async (req, res) => {
     }
 
     try {
+        if (!isResourceExists(resource_ids, current_user)) {
+            throw new Error("Recursos informados não existem.");
+        }
+
         for(let i in patient_id) {
             let patientInfo = await UserRepository.findOne({
                 "$and": [
@@ -43,7 +48,8 @@ exports.registerSession = async (req, res) => {
             topic,
             duration,
             session_type,
-            professional
+            professional,
+            resource_ids
         });
 
         res.status(201).json({
@@ -83,7 +89,7 @@ exports.dashboard = async (req, res) => {
         let scheduledSessionsMonth = await SessionService.ScheduledSessionsMonth(current_user);
         let canceledSessionsMonth = await SessionService.CanceledSessionsMonth(current_user);
 
-        res.status(200).json({ 
+        res.status(200).json({
             scheduledSessionsDay,
             scheduledSessionsMonth,
             canceledSessionsMonth
@@ -95,7 +101,7 @@ exports.dashboard = async (req, res) => {
 
 exports.editSession = async (req, res) => {
     let { id } = req.params;
-    let { patient_id, topic, duration, session_type, status, observation } = req.body;
+    let { patient_id, topic, duration, session_type, status, observation, resource_ids } = req.body;
 
     let contract = new ValidationContract();
     contract.isSessionTypeValueValid(session_type, 'Tipo de sessão inválido');
@@ -113,12 +119,16 @@ exports.editSession = async (req, res) => {
             let patientInfo = await UserRepository.findOne({
                  _id: patient_id[i],
             }, {id: 1, name: 1, email: 1});
-    
+
             patient.push(patientInfo);
         }
     }
 
     try {
+        if (!isResourceExists(resource_ids, current_user)) {
+            throw new Error("Recursos informados não existem.");
+        }
+
         await SessionRepository.update(id, {
             patient,
             appointment_date,
@@ -126,7 +136,8 @@ exports.editSession = async (req, res) => {
             duration,
             session_type,
             status,
-            observation
+            observation,
+            resource_ids
         });
 
         res.status(200).json({ message: "Dados atualizados com sucesso" });
