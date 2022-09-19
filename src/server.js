@@ -1,13 +1,11 @@
-const { mongoConnect } = require('./database/mongodb');
+const { mongoConnect } = require("./database/mongodb");
 
-const resourceRoute = require('./routes/resource.routes');
-const sessionRoute = require('./routes/session.routes');
-const userRoute = require('./routes/user.routes');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocs = require('./swagger.json');
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./swagger.json");
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const { setupRoutes } = require("./helpers/setupRoutes");
 
 dotenv.config();
 
@@ -20,9 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Carregando rotas
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use('/api', userRoute);
-app.use('/api', sessionRoute);
-app.use('/api', resourceRoute);
+setupRoutes(app);
 
 app.listen(process.env.PORT);
 console.log("Servidor rodando na porta " + process.env.PORT);
