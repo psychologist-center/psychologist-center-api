@@ -1,14 +1,28 @@
-const SessionController = require('../modules/Session/SessionController');
-const AuthService = require('../services/authService');
-const express = require('express');
-const router = express.Router();
+const SessionController = require("../modules/Session/SessionController");
+const AuthService = require("../services/authService");
 
-router.post('/session/register', AuthService.checkProfessional, SessionController.registerSession);
+module.exports = (router) => {
+    router.post(
+        "/session/register",
+        AuthService.checkProfessional,
+        SessionController.registerSession
+    );
 
-router.get('/session/list', AuthService.checkProfessional, SessionController.ListSession);
+    router.get(
+        "/session/list",
+        AuthService.checkProfessional,
+        SessionController.ListSession
+    );
 
-router.get('/dashboard', AuthService.checkProfessional, SessionController.dashboard);
+    router.get(
+        "/dashboard",
+        AuthService.checkProfessional,
+        SessionController.dashboard
+    );
 
-router.put('/session/:id', AuthService.checkProfessional, SessionController.editSession);
-
-module.exports = router;
+    router.put(
+        "/session/:id",
+        AuthService.checkProfessional,
+        SessionController.editSession
+    );
+};
