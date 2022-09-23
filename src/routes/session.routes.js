@@ -25,4 +25,10 @@ module.exports = (router) => {
         AuthService.checkProfessional,
         SessionController.editSession
     );
+
+    router.delete(
+        "/session/:id",
+        AuthService.checkProfessional,
+        SessionController.deleteSession
+    );
 };
