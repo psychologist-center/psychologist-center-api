@@ -1,7 +1,7 @@
 const { mongoConnect } = require("./database/mongodb");
 
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocs = require("./swagger.json");
+const swaggerDocs = require("./helpers/swaggerDoc");
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");

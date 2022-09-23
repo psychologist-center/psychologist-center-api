@@ -1,5 +1,5 @@
-const ResourceController = require("../modules/Resource/ResourceController");
-const AuthService = require("../services/authService");
+const ResourceController = require("../../modules/Resource/ResourceController");
+const AuthService = require("../../services/authService");
 
 module.exports = (router) => {
     router.post(

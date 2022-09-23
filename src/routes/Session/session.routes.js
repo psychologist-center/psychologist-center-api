@@ -1,5 +1,5 @@
-const SessionController = require("../modules/Session/SessionController");
-const AuthService = require("../services/authService");
+const SessionController = require("../../modules/Session/SessionController");
+const AuthService = require("../../services/authService");
 
 module.exports = (router) => {
     router.post(
